@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Bash для специалиста по ИБ</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1e1e2e; color: #e6e6f0;
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden;
+  }
+  .slide {
+    display: none; height: 100vh; padding: 5vh 7vw;
+    flex-direction: column; justify-content: center;
+  }
+  .slide.active { display: flex; }
+  h1 { font-size: 3rem; color: #89b4fa; margin-bottom: 1.8rem; }
+  h2 { font-size: 1.9rem; color: #89b4fa; margin-bottom: 1.2rem; }
+  p, li { font-size: 1.28rem; line-height: 1.5; }
+  ul { padding-left: 2rem; margin: 0.7rem 0; }
+  li { margin-bottom: 0.4rem; }
+  code, .code {
+    font-family: "SF Mono", Menlo, monospace;
+    background: #313244; color: #a6e3a1;
+    padding: 0.1em 0.4em; border-radius: 6px; font-size: 0.85em;
+  }
+  pre {
+    font-family: "SF Mono", Menlo, monospace;
+    background: #11111b; color: #a6e3a1; font-size: 1.05rem;
+    padding: 1rem 1.3rem; border-radius: 10px; margin: 0.8rem 0;
+    overflow-x: auto; line-height: 1.45;
+  }
+  pre .c { color: #6c7086; }
+  pre .k { color: #cba6f7; }
+  .hl { color: #f9e2af; font-weight: 600; }
+  .bad { color: #f38ba8; }
+  .ok { color: #a6e3a1; }
+  .flow { display: flex; align-items: center; gap: 0.7rem; margin: 1rem 0; flex-wrap: wrap; }
+  .box {
+    background: #313244; border: 2px solid #89b4fa; border-radius: 10px;
+    padding: 0.7rem 1.2rem; font-size: 1.1rem; text-align: center;
+  }
+  .box.small { font-size: 0.95rem; padding: 0.4rem 0.8rem; }
+  .arrow { color: #89b4fa; font-size: 1.6rem; }
+  .note { color: #a6adc8; font-size: 1.05rem; margin-top: 1rem; }
+  table { border-collapse: collapse; margin: 0.8rem 0; }
+  th, td { border: 1px solid #45475a; padding: 0.45rem 1rem; font-size: 1.05rem; text-align: left; }
+  th { background: #313244; color: #89b4fa; }
+  #counter { position: fixed; bottom: 2vh; right: 3vw; color: #6c7086; font-size: 1rem; }
+  #hint { position: fixed; bottom: 2vh; left: 3vw; color: #45475a; font-size: 0.95rem; }
+</style>
+</head>
+<body>
+
+<!-- ======================= ВВЕДЕНИЕ ======================= -->
+
+<section class="slide">
+  <h1>Bash для специалиста по ИБ</h1>
+  <p>Командная строка как инструмент аудита и расследования</p>
+  <p class="note">Две лабораторные: основы → анализ логов → расследование</p>
+</section>
+
+<section class="slide">
+  <h2>Зачем безопаснику bash</h2>
+  <ul>
+    <li>на серверах <span class="hl">нет графического интерфейса</span> — только терминал</li>
+    <li>логи — это текст; текст — родная стихия bash</li>
+    <li>при инциденте GUI-инструменты могут быть недоступны или заражены;
+        штатные команды — всегда под рукой</li>
+    <li>рутина (проверки, отчёты, мониторинг) автоматизируется скриптами</li>
+  </ul>
+  <p class="note">Сегодня: от <code>ls</code> — до обнаружения взлома в логах.</p>
+</section>
+
+<section class="slide">
+  <h2>Как выполняется команда</h2>
+  <div class="flow">
+    <div class="box small">вы вводите</div><span class="arrow">→</span>
+    <div class="box small">shell (bash)<br><small>разбирает</small></div><span class="arrow">→</span>
+    <div class="box small">программа<br><small>работает</small></div><span class="arrow">→</span>
+    <div class="box small">stdout / stderr</div>
+  </div>
+  <ul>
+    <li><b>stdout</b> — обычный вывод, <b>stderr</b> — ошибки (поток №2)</li>
+    <li>команда возвращает <span class="hl">код завершения</span>: 0 — успех, не 0 — ошибка</li>
+    <li>вывод одной команды можно передать другой — это конвейер <code>|</code></li>
+  </ul>
+</section>
+
+<!-- ======================= ЛАБ 1: ОСНОВЫ ======================= -->
+
+<section class="slide">
+  <h1>Часть 1. Основы</h1>
+  <p>Навигация, права, пользователи, поиск, процессы, история</p>
+</section>
+
+<section class="slide">
+  <h2>Навигация и скрытые файлы (task01)</h2>
+  <pre>pwd            <span class="c"># где я</span>
+cd data/practice_tree
+ls -la         <span class="c"># всё, включая скрытое</span></pre>
+  <ul>
+    <li>файлы с точки в начале (<code>.env</code>) обычный <code>ls</code> не показывает</li>
+    <li>там часто лежат пароли и настройки — а иногда и «закладки»</li>
+    <li><code>cd ..</code> — уровень вверх, <code>cd ../..</code> — два</li>
+  </ul>
+  <p class="note">В задании найдёте скрытый файл с паролем — и поймёте, почему .env не коммитят.</p>
+</section>
+
+<section class="slide">
+  <h2>Права доступа (task02)</h2>
+  <pre>- rw- r-- r--
+│  │   │   └── остальные
+│  │   └────── группа
+│  └────────── владелец
+└───────────── тип (- файл, d каталог)</pre>
+  <table>
+    <tr><th>Право</th><th>Буква</th><th>Число</th></tr>
+    <tr><td>чтение</td><td>r</td><td>4</td></tr>
+    <tr><td>запись</td><td>w</td><td>2</td></tr>
+    <tr><td>исполнение</td><td>x</td><td>1</td></tr>
+  </table>
+  <p><code>chmod 600 .env</code> = владелец rw (4+2), остальным — ничего.
+  <span class="bad">chmod 777 — все могут всё. Так не делаем никогда.</span></p>
+</section>
+
+<section class="slide">
+  <h2>Пользователи (task03)</h2>
+  <pre>whoami   <span class="c"># кто я</span>
+id       <span class="c"># мои UID/GID и группы</span></pre>
+  <ul>
+    <li>все пользователи — в <code>/etc/passwd</code>: <code>имя:x:UID:GID:...:shell</code></li>
+    <li><span class="hl">UID 0 — root</span>, всемогущий. Обычные люди — UID ≥ 1000</li>
+    <li>при аудите проверяют: нет ли «лишнего» пользователя с UID 0 —
+        классическая закладка</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>find и SUID (task04)</h2>
+  <pre>find dir -name "*.log"     <span class="c"># по имени</span>
+find dir -type d           <span class="c"># только каталоги</span>
+find dir -mtime -1         <span class="c"># изменены за сутки</span>
+find /usr/bin -perm -4000 2>/dev/null   <span class="c"># SUID</span></pre>
+  <ul>
+    <li><span class="hl">SUID</span>: программа выполняется с правами <b>владельца</b>
+        (например root), а не запустившего</li>
+    <li>легитимно: <code>passwd</code>. Лишний SUID — готовое повышение привилегий</li>
+    <li>поэтому атакующий первым делом делает именно этот find —
+        и защитник должен делать его регулярно</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>grep (task05)</h2>
+  <pre>grep "Failed password" auth.log        <span class="c"># строки с шаблоном</span>
+grep "Failed password" auth.log | wc -l  <span class="c"># сколько их</span>
+grep -v "192.168.1" ...                  <span class="c"># инверсия: всё КРОМЕ</span>
+grep -oE 'from [0-9.]+' ...              <span class="c"># вырезать кусок</span></pre>
+  <ul>
+    <li>grep — главный инструмент чтения логов</li>
+    <li><code>| wc -l</code> превращает поиск в число: «сколько раз» важнее «вижу строки»</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Процессы (task06)</h2>
+  <pre>ps aux | grep sleep     <span class="c"># найти процесс</span>
+kill <PID>              <span class="c"># вежливо завершить (TERM)</span>
+kill -9 <PID>           <span class="c"># убить безусловно (KILL)</span></pre>
+  <ul>
+    <li>вредонос на машине — это процесс; <code>ps aux</code> — кто живёт в системе</li>
+    <li>KILL не даёт процессу «прибраться» — при расследовании иногда вредно:
+        не успеем снять улики из памяти</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Перенаправления (task07)</h2>
+  <pre>команда >  out.txt    <span class="c"># записать (перезаписать файл!)</span>
+команда >> out.txt    <span class="c"># дописать в конец</span>
+команда 2> err.txt    <span class="c"># только ошибки</span>
+команда > out.txt 2>&1  <span class="c"># всё в один файл</span></pre>
+  <p>Для безопасника это — <span class="hl">фиксация улик</span>: каждый шаг расследования
+  пишется в файл-отчёт, а не «я видел в консоли».</p>
+</section>
+
+<section class="slide">
+  <h2>history как улика (task08)</h2>
+  <ul>
+    <li><code>history</code> — журнал команд пользователя; взломщик его боится</li>
+    <li>обходы: <code>history -c</code>, команда с пробелом впереди
+        (работает при HISTCONTROL=ignorespace)</li>
+    <li>вывод защитника: history — улика, но <span class="hl">подчищаемая</span>;
+        настоящий аудит — логи, которые уходят на сервер, недоступный
+        атакующему</li>
+  </ul>
+  <p class="note">В задании разберёте историю «гостя»: что скачал, что читал, как заметал следы.</p>
+</section>
+
+<!-- ======================= ЛАБ 2: ЛОГИ ======================= -->
+
+<section class="slide">
+  <h1>Часть 2. Логи и скрипты</h1>
+  <p>Конвейеры, awk, обнаружение атак, автоматизация</p>
+</section>
+
+<section class="slide">
+  <h2>Философия конвейеров</h2>
+  <p>Маленькие программы, каждая делает одно дело, склеиваются через <code>|</code>:</p>
+  <pre>cut -d' ' -f1 access.log | sort | uniq -c | sort -rn | head -5
+ <span class="c">│ вырезать IP   │ рядом │ посчитать │ по убыванию │ топ-5</span></pre>
+  <p>Собирайте конвейер <span class="hl">по одной команде</span>, глядя на вывод после
+  каждой — так делают все.</p>
+  <p class="note">Важно: <code>uniq -c</code> склеивает только СОСЕДНИЕ строки — поэтому sort перед ним обязателен.</p>
+</section>
+
+<section class="slide">
+  <h2>awk: колонки и фильтры (task02)</h2>
+  <pre>awk '{print $1}' access.log          <span class="c"># первая колонка (IP)</span>
+awk '{print $9}' access.log          <span class="c"># девятая (HTTP-код)</span>
+awk '$9 == 404' access.log           <span class="c"># фильтр: только 404</span></pre>
+  <p>awk читает файл построчно и сам режет на поля по пробелам.
+  Формат: <code>условие {действие}</code> — любое из двух можно опустить.</p>
+</section>
+
+<section class="slide">
+  <h2>Читаем auth.log (task03)</h2>
+  <pre>Nov 19 14:00:45 server sshd[3335]: Failed password for admin from 198.51.100.23 port 51505 ssh2
+Nov 19 14:01:51 server sshd[3399]: Failed password for <span class="hl">invalid user</span> root from 203.0.113.7 ...</pre>
+  <ul>
+    <li>подвох: <code>invalid user</code> добавляет два слова → номер колонки с IP «плывёт»</li>
+    <li>надёжно: резать по маркеру <code>from</code>, а не по номеру поля:
+        <code>grep -oE 'from [0-9.]+' | awk '{print $2}'</code></li>
+  </ul>
+  <p class="note">Урок на всю карьеру: не доверяйте формату лога — проверяйте.</p>
+</section>
+
+<section class="slide">
+  <h2>Читаем access.log (task04)</h2>
+  <pre>192.168.1.15 - - [19/Nov/2026:10:12:33 +0300] "GET /products HTTP/1.1" 200 4521
+ <span class="c">│поле 1 (IP)                     поле 6-8 (запрос)      │код(9) │байты</span></pre>
+  <ul>
+    <li>распределение кодов — «пульс» сайта: <code>awk '{print $9}' | sort | uniq -c</code></li>
+    <li>серия 404 по <code>/admin</code>, <code>/.env</code>, <code>/.git</code> — сканер ищет уязвимости</li>
+    <li>машинный темп (запросы каждые секунды) выдаёт автоматику</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Индикаторы атаки</h2>
+  <table>
+    <tr><th>Что в логе</th><th>Что это</th></tr>
+    <tr><td>много Failed password с одного IP</td><td>брутфорс SSH</td></tr>
+    <tr><td>Accepted password с «грязного» IP</td><td><span class="bad">взлом</span></td></tr>
+    <tr><td>404-серия по admin/.env/.git</td><td>сканирование</td></tr>
+    <tr><td>успех сразу после серии неудач</td><td>перебор удался</td></tr>
+  </table>
+  <p>Дежурная смена SOC живёт так: <span class="hl">поток логов + фильтры
+  по индикаторам</span> (task07: <code>tail -f | grep</code>).</p>
+</section>
+
+<section class="slide">
+  <h2>Окно времени (task05)</h2>
+  <pre>grep "Nov 19 14:" auth.log          <span class="c"># весь 14-й час</span>
+grep "Nov 19 14:[3-5]" auth.log     <span class="c"># 14:30–14:59</span></pre>
+  <ul>
+    <li>расследование = сужение: сначала «весь день», потом час, потом минуты</li>
+    <li>скобки <code>[3-5]</code> — «один символ из набора»</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Скрипты (task06)</h2>
+  <pre>#!/usr/bin/env bash
+set -euo pipefail        <span class="c"># падать при ошибке, не «ехать дальше»</span>
+LOG="${1:-data/auth.log}"  <span class="c"># аргумент со значением по умолчанию</span></pre>
+  <ul>
+    <li>скрипт = записанные в файл команды + <code>chmod +x</code></li>
+    <li><code>$1</code> — первый аргумент; <code>:-</code> — «если не передали, возьми вот это»</li>
+    <li>всё, что делали руками в lab1–lab2, превращается в <code>report.sh</code></li>
+  </ul>
+</section>
+
+<!-- ======================= КАК ДЕЛАТЬ ======================= -->
+
+<section class="slide">
+  <h1>Часть 3. Как выполнять задания</h1>
+</section>
+
+<section class="slide">
+  <h2>Структура репозитория</h2>
+  <pre>bash-sec-lab-students/
+├── README.md           <span class="c"># карта и правила</span>
+├── data/               <span class="c"># учебные логи с «атакой»</span>
+│   ├── auth.log        <span class="c"># журнал SSH</span>
+│   ├── access.log      <span class="c"># журнал веб-сервера</span>
+│   └── intruder_history.txt
+├── lab1/task01..task08  <span class="c"># основы</span>
+├── lab2/task01..task08  <span class="c"># логи и скрипты</span>
+└── pro/pro01..pro10     <span class="c"># самостоятельные</span></pre>
+</section>
+
+<section class="slide">
+  <h2>Правила игры</h2>
+  <ul>
+    <li>заходим в папку → читаем README → выполняем шаги</li>
+    <li>пропуск <code>____</code> / пометка <span class="hl">ВПИШИТЕ</span> — подставить своё значение</li>
+    <li>в конце README — <span class="hl">что сдать в отчёт</span></li>
+    <li>команды собираем по частям, вывод читаем после каждой</li>
+    <li>в pro — готовых команд нет: есть цель и критерий приёмки</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Карта lab1</h2>
+  <table>
+    <tr><th>Блок</th><th>Задания</th></tr>
+    <tr><td>Файлы</td><td>01 навигация/скрытые · 02 права · 04 find/SUID</td></tr>
+    <tr><td>Система</td><td>03 пользователи · 06 процессы</td></tr>
+    <tr><td>Следы</td><td>05 grep по логу · 07 отчёт-улики · 08 history</td></tr>
+  </table>
+  <p>Каждое задание — 10–15 минут, опирается на предыдущее.</p>
+</section>
+
+<section class="slide">
+  <h2>Карта lab2</h2>
+  <table>
+    <tr><th>Блок</th><th>Задания</th></tr>
+    <tr><td>Инструменты</td><td>01 конвейеры · 02 awk · 05 окно времени</td></tr>
+    <tr><td>Детект</td><td>03 брутфорс · 04 коды и сканер</td></tr>
+    <tr><td>Автоматизация</td><td>06 report.sh · 07 tail -f мониторинг</td></tr>
+    <tr><td>Финал</td><td>08 мини-расследование по всем данным</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Что зашито в данные (без спойлеров)</h2>
+  <ul>
+    <li>в логах — <span class="hl">настоящая цепочка атаки</span>, а не случайный шум</li>
+    <li>есть «громкий» атакующий и «тихий» — найдите обоих</li>
+    <li>главный вопрос финала: <span class="bad">был ли взлом?</span> Ответ — только
+        с командами-доказательствами</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Pro-уровень</h2>
+  <table>
+    <tr><th>Задание</th><th>Тема</th></tr>
+    <tr><td>pro01, pro03</td><td>свой fail2ban, отчёт с уровнями тревоги</td></tr>
+    <tr><td>pro02, pro04</td><td>baseline и дрейф: SUID-аудит, контроль целостности</td></tr>
+    <tr><td>pro05, pro06</td><td>аудит системы, сторож процессов</td></tr>
+    <tr><td>pro07, pro08</td><td>полный разбор логов, единый таймлайн</td></tr>
+    <tr><td>pro09</td><td>безопасный скрипт (ревью своего кода)</td></tr>
+    <tr><td>pro10</td><td>финальный кейс на 30 минут</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Типовые ошибки</h2>
+  <table>
+    <tr><th>Симптом</th><th>Причина</th></tr>
+    <tr><td>uniq считает неправильно</td><td>забыт sort перед uniq</td></tr>
+    <tr><td>awk «не та колонка»</td><td>invalid user сдвигает поля — режьте по маркеру</td></tr>
+    <tr><td>grep в конвейере молчит</td><td>нужен --line-buffered после tail -f</td></tr>
+    <tr><td>Permission denied</td><td>нет chmod +x / нет прав на файл</td></tr>
+    <tr><td>в отчёте только дата</td><td>&gt; вместо &gt;&gt; перезаписал файл</td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Этика</h2>
+  <ul>
+    <li>все приёмы отрабатываем на своих файлах и своём стенде</li>
+    <li>те же команды против чужих систем без разрешения — уголовная статья</li>
+    <li>мы учимся <span class="hl">защищать</span>: находить следы, доказывать, укреплять</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Итоги</h2>
+  <ul>
+    <li>сервер безопасника — это терминал и текстовые логи</li>
+    <li>права, пользователи, процессы — то, что аудируется в первую очередь</li>
+    <li>конвейер <code>grep/awk | sort | uniq -c | sort -rn</code> решает 80% разбора логов</li>
+    <li>ручные команды → скрипт → автоматический мониторинг</li>
+    <li>вывод без команды-доказательства — не вывод</li>
+  </ul>
+  <p class="note">Вопросы?</p>
+</section>
+
+<div id="counter"></div>
+<div id="hint">← → — навигация</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  const counter = document.getElementById('counter');
+  function show(i) {
+    cur = Math.max(0, Math.min(i, slides.length - 1));
+    slides.forEach((s, n) => s.classList.toggle('active', n === cur));
+    counter.textContent = (cur + 1) + ' / ' + slides.length;
+    location.hash = cur;
+  }
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(cur + 1);
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) show(cur - 1);
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  document.addEventListener('click', () => show(cur + 1));
+  show(parseInt(location.hash.slice(1)) || 0);
+</script>
+</body>
+</html>
