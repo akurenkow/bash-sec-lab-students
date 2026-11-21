@@ -1,0 +1,8 @@
+Nov 19 08:50:11 server sshd[1224]: Accepted password for admin from 192.168.1.15 port 51125 ssh2
+Nov 19 08:57:11 server sshd[1245]: Accepted password for admin from 192.168.1.22 port 51350 ssh2
+Nov 19 09:16:11 server sshd[1296]: Accepted password for admin from 192.168.1.22 port 51858 ssh2
+Nov 19 09:24:11 server sshd[1227]: Accepted password for admin from 192.168.1.15 port 51854 ssh2
+Nov 19 10:37:11 server sshd[1214]: Accepted password for admin from 192.168.1.22 port 51130 ssh2
+Nov 19 10:44:11 server sshd[1221]: Accepted password for admin from 192.168.1.15 port 51704 ssh2
+Nov 19 11:15:11 server sshd[1237]: Accepted password for admin from 192.168.1.15 port 51338 ssh2
+Nov 19 11:42:11 server sshd[1287]: Accepted password for admin from 192.168.1.22 port 51127 ssh2
