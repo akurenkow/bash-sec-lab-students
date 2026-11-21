@@ -21,7 +21,6 @@ if [[ ! -f $BASELINE ]]; then
 		echo "baseline cохранен в $SCRIPT_DIR/$BASELINE"
 	fi
 
-
 else
 
 	# если файл существует, сравниваем полученный результат с содержимым файла
