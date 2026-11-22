@@ -4,13 +4,14 @@
 ```
 grep "Failed password" pro/pro10-final-case/ssh_auth_training.log \
   | grep -oE 'from [0-9.]+' | awk '{print $2}' \
-  | sort | uniq -c | sort -rn
+  | sort | uniq -c | sort -rn | column -t -N "COUNT,IP"
 ```
 Результат:
 ```
-     32 203.0.113.7
-      9 198.51.100.23
-      1 203.0.113.45
+COUNT  IP
+32     203.0.113.7
+9      198.51.100.23
+1      203.0.113.45
 ```
 
 Проверка через поиск событий по IP `203.0.113.7` в выводе timeline.sh
