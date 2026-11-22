@@ -1,0 +1,193 @@
+# SYNTHETIC SSH/auth.log TRAINING DATA
+# Syslog-style entries for SOC practice; external IPs use documentation-only TEST-NET ranges.
+Nov 19 08:17:41 server sshd[1346]: Accepted password for backup from 192.168.1.22 port 56495 ssh2
+Nov 19 08:17:43 server sshd[1346]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 08:24:34 server sshd[1271]: Accepted password for deploy from 192.168.1.15 port 50778 ssh2
+Nov 19 08:24:36 server sshd[1271]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 08:35:00 server sshd[2400]: Accepted publickey for deploy from 192.168.1.15 port 51000 ssh2: ED25519 SHA256:TRAININGKEY0
+Nov 19 08:35:02 server sshd[2400]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 08:39:14 server sshd[1288]: Accepted password for admin from 10.0.0.5 port 54165 ssh2
+Nov 19 08:39:17 server sshd[1288]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 08:44:44 server sshd[1230]: Accepted password for deploy from 192.168.1.22 port 59117 ssh2
+Nov 19 08:44:48 server sshd[1230]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 08:47:00 server sshd[2400]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 08:50:39 server sshd[1250]: Accepted password for deploy from 192.168.1.22 port 52023 ssh2
+Nov 19 08:50:42 server sshd[1250]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 08:52:07 server sshd[1266]: Accepted password for admin from 192.168.1.40 port 58766 ssh2
+Nov 19 08:52:08 server sshd[1266]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 08:54:41 server sshd[1346]: pam_unix(sshd:session): session closed for user backup
+Nov 19 09:09:51 server sshd[1431]: Accepted password for backup from 192.168.1.40 port 56244 ssh2
+Nov 19 09:09:55 server sshd[1431]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 09:36:07 server sshd[1266]: pam_unix(sshd:session): session closed for user admin
+Nov 19 09:42:11 server sshd[2601]: Invalid user git from 192.0.2.77 port 42210
+Nov 19 09:42:12 server sshd[2601]: Connection closed by invalid user git 192.0.2.77 port 42210 [preauth]
+Nov 19 09:42:14 server sshd[1288]: pam_unix(sshd:session): session closed for user admin
+Nov 19 09:46:45 server sshd[1349]: Accepted password for admin from 192.168.1.15 port 54002 ssh2
+Nov 19 09:46:47 server sshd[1349]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 09:49:44 server sshd[1230]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 09:59:21 server sshd[1342]: Accepted password for deploy from 192.168.1.40 port 53476 ssh2
+Nov 19 09:59:23 server sshd[1342]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 09:59:50 server sshd[1427]: Accepted password for analyst from 192.168.1.15 port 53574 ssh2
+Nov 19 09:59:53 server sshd[1427]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 10:05:03 server sshd[1225]: Accepted password for admin from 192.168.1.22 port 54438 ssh2
+Nov 19 10:05:04 server sshd[1225]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 10:08:00 server sshd[2401]: Accepted publickey for backup from 10.0.0.5 port 51001 ssh2: ED25519 SHA256:TRAININGKEY1
+Nov 19 10:08:02 server sshd[2401]: pam_unix(sshd:session): session opened for user backup(uid=1001) by (uid=0)
+Nov 19 10:12:48 server sshd[1356]: Accepted password for deploy from 192.168.1.15 port 54806 ssh2
+Nov 19 10:12:50 server sshd[1356]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 10:18:44 server sshd[2712]: Received disconnect from 192.168.1.22 port 53120:11: disconnected by user
+Nov 19 10:18:44 server sshd[2712]: Disconnected from user admin 192.168.1.22 port 53120
+Nov 19 10:20:00 server sshd[2401]: pam_unix(sshd:session): session closed for user backup
+Nov 19 10:24:45 server sshd[1220]: Accepted password for deploy from 192.168.1.15 port 57606 ssh2
+Nov 19 10:24:48 server sshd[1220]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 10:30:45 server sshd[1349]: pam_unix(sshd:session): session closed for user admin
+Nov 19 10:32:48 server sshd[1203]: Accepted password for admin from 10.0.0.5 port 59242 ssh2
+Nov 19 10:32:52 server sshd[1203]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 10:40:50 server sshd[1427]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 10:44:02 server sshd[1302]: Accepted password for analyst from 192.168.1.15 port 54416 ssh2
+Nov 19 10:44:03 server sshd[1302]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 10:44:48 server sshd[1203]: pam_unix(sshd:session): session closed for user admin
+Nov 19 10:54:16 server sshd[1437]: Accepted password for admin from 10.0.0.5 port 59741 ssh2
+Nov 19 10:54:20 server sshd[1437]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 10:56:53 server sshd[1369]: Accepted password for analyst from 10.0.0.5 port 52710 ssh2
+Nov 19 10:56:56 server sshd[1369]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 10:58:30 server sshd[1390]: Accepted password for analyst from 192.168.1.40 port 50023 ssh2
+Nov 19 10:58:31 server sshd[1390]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 11:07:03 server sshd[2890]: Connection closed by 203.0.113.45 port 44901 [preauth]
+Nov 19 11:08:19 server sshd[2893]: Did not receive identification string from 203.0.113.45 port 44912
+Nov 19 11:09:11 server sshd[1296]: Accepted password for deploy from 10.0.0.5 port 56694 ssh2
+Nov 19 11:09:15 server sshd[1296]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 11:18:45 server sshd[1322]: Accepted password for backup from 192.168.1.40 port 50029 ssh2
+Nov 19 11:18:48 server sshd[1322]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 11:20:18 server sshd[1447]: Accepted password for deploy from 192.168.1.22 port 58471 ssh2
+Nov 19 11:20:20 server sshd[1447]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 11:23:16 server sshd[1437]: pam_unix(sshd:session): session closed for user admin
+Nov 19 11:23:42 server sshd[1401]: Accepted password for deploy from 10.0.0.5 port 56872 ssh2
+Nov 19 11:23:43 server sshd[1401]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 11:24:53 server sshd[1369]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 11:31:21 server sshd[1342]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 11:33:48 server sshd[1356]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 11:34:28 server sshd[1241]: Accepted password for admin from 192.168.1.15 port 55926 ssh2
+Nov 19 11:34:30 server sshd[1241]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 11:36:01 server sshd[1372]: Accepted password for backup from 10.0.0.5 port 57575 ssh2
+Nov 19 11:36:02 server sshd[1372]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 11:37:30 server sshd[1390]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 11:45:08 server sshd[1258]: Accepted password for analyst from 10.0.0.5 port 51327 ssh2
+Nov 19 11:45:09 server sshd[1258]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 11:46:58 server sshd[1214]: Accepted password for analyst from 10.0.0.5 port 58162 ssh2
+Nov 19 11:47:02 server sshd[1214]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 11:47:17 server sshd[1419]: Accepted password for backup from 192.168.1.22 port 51568 ssh2
+Nov 19 11:47:18 server sshd[1419]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 11:52:02 server sshd[1302]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 11:56:58 server sshd[1214]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 12:00:42 server sshd[1401]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 12:02:00 server sshd[2402]: Accepted publickey for analyst from 192.168.1.40 port 51002 ssh2: ED25519 SHA256:TRAININGKEY2
+Nov 19 12:02:02 server sshd[2402]: pam_unix(sshd:session): session opened for user analyst(uid=1001) by (uid=0)
+Nov 19 12:08:01 server sshd[1372]: pam_unix(sshd:session): session closed for user backup
+Nov 19 12:13:50 server sshd[1315]: Accepted password for backup from 192.168.1.15 port 50752 ssh2
+Nov 19 12:13:51 server sshd[1315]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 12:14:00 server sshd[2402]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 12:15:11 server sshd[1296]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 12:20:00 server sshd[3011]: error: maximum authentication attempts exceeded for admin from 198.51.100.23 port 52001 ssh2 [preauth]
+Nov 19 12:20:00 server sshd[3011]: Disconnecting authenticating user admin 198.51.100.23 port 52001: Too many authentication failures [preauth]
+Nov 19 12:26:05 server sshd[1205]: Accepted password for backup from 192.168.1.22 port 57387 ssh2
+Nov 19 12:26:06 server sshd[1205]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 12:28:09 server sshd[1311]: Accepted password for analyst from 192.168.1.15 port 55234 ssh2
+Nov 19 12:28:13 server sshd[1311]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 12:32:05 server sshd[1205]: pam_unix(sshd:session): session closed for user backup
+Nov 19 12:36:55 server sshd[1365]: Accepted password for analyst from 192.168.1.15 port 57033 ssh2
+Nov 19 12:36:57 server sshd[1365]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 12:39:28 server sshd[1241]: pam_unix(sshd:session): session closed for user admin
+Nov 19 12:43:50 server sshd[1315]: pam_unix(sshd:session): session closed for user backup
+Nov 19 12:44:28 server sshd[1329]: Accepted password for admin from 192.168.1.22 port 57316 ssh2
+Nov 19 12:44:30 server sshd[1329]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 12:58:38 server sshd[1378]: Accepted password for admin from 192.168.1.15 port 50890 ssh2
+Nov 19 12:58:40 server sshd[1378]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 13:03:38 server sshd[1378]: pam_unix(sshd:session): session closed for user admin
+Nov 19 13:05:42 server sshd[3150]: Failed publickey for deploy from 203.0.113.45 port 46001 ssh2: ED25519 SHA256:UNKNOWNKEY
+Nov 19 13:06:10 server sshd[3154]: Invalid user postgres from 203.0.113.45 port 46009
+Nov 19 13:06:11 server sshd[3154]: Failed password for invalid user postgres from 203.0.113.45 port 46009 ssh2
+Nov 19 13:26:35 server sshd[1331]: Accepted password for admin from 192.168.1.15 port 55895 ssh2
+Nov 19 13:26:39 server sshd[1331]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 13:32:23 server sshd[1410]: Accepted password for backup from 192.168.1.40 port 58573 ssh2
+Nov 19 13:32:26 server sshd[1410]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 13:37:03 server sshd[1398]: Accepted password for analyst from 192.168.1.40 port 54162 ssh2
+Nov 19 13:37:05 server sshd[1398]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 13:41:35 server sshd[1331]: pam_unix(sshd:session): session closed for user admin
+Nov 19 14:00:00 server sshd[3300]: Failed password for root from 203.0.113.7 port 49570 ssh2
+Nov 19 14:01:07 server sshd[3301]: Failed password for root from 203.0.113.7 port 42983 ssh2
+Nov 19 14:02:14 server sshd[3302]: Failed password for root from 203.0.113.7 port 49851 ssh2
+Nov 19 14:03:21 server sshd[3303]: Failed password for root from 203.0.113.7 port 47577 ssh2
+Nov 19 14:04:23 server sshd[1410]: pam_unix(sshd:session): session closed for user backup
+Nov 19 14:04:28 server sshd[3304]: Failed password for root from 203.0.113.7 port 47079 ssh2
+Nov 19 14:05:35 server sshd[3305]: Failed password for root from 203.0.113.7 port 48591 ssh2
+Nov 19 14:06:42 server sshd[3306]: Failed password for root from 203.0.113.7 port 47448 ssh2
+Nov 19 14:07:49 server sshd[3307]: Failed password for root from 203.0.113.7 port 41070 ssh2
+Nov 19 14:08:56 server sshd[3308]: Failed password for root from 203.0.113.7 port 43780 ssh2
+Nov 19 14:10:03 server sshd[3309]: Failed password for root from 203.0.113.7 port 42246 ssh2
+Nov 19 14:10:39 server sshd[1337]: Accepted password for backup from 192.168.1.15 port 58111 ssh2
+Nov 19 14:10:43 server sshd[1337]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 14:11:10 server sshd[3310]: Failed password for root from 203.0.113.7 port 42379 ssh2
+Nov 19 14:12:17 server sshd[3311]: Failed password for root from 203.0.113.7 port 47832 ssh2
+Nov 19 14:13:24 server sshd[3312]: Failed password for root from 203.0.113.7 port 40040 ssh2
+Nov 19 14:14:31 server sshd[3313]: Failed password for root from 203.0.113.7 port 42862 ssh2
+Nov 19 14:15:38 server sshd[3314]: Failed password for root from 203.0.113.7 port 46012 ssh2
+Nov 19 14:16:45 server sshd[3315]: Failed password for root from 203.0.113.7 port 46435 ssh2
+Nov 19 14:17:52 server sshd[3316]: Failed password for root from 203.0.113.7 port 47938 ssh2
+Nov 19 14:18:59 server sshd[3317]: Failed password for root from 203.0.113.7 port 41309 ssh2
+Nov 19 14:20:06 server sshd[3318]: Failed password for root from 203.0.113.7 port 47287 ssh2
+Nov 19 14:21:13 server sshd[3319]: Failed password for root from 203.0.113.7 port 48487 ssh2
+Nov 19 14:22:20 server sshd[3320]: Failed password for root from 203.0.113.7 port 44374 ssh2
+Nov 19 14:23:27 server sshd[3321]: Failed password for root from 203.0.113.7 port 41651 ssh2
+Nov 19 14:24:34 server sshd[3322]: Failed password for root from 203.0.113.7 port 42733 ssh2
+Nov 19 14:25:41 server sshd[3323]: Failed password for root from 203.0.113.7 port 45954 ssh2
+Nov 19 14:26:48 server sshd[3324]: Failed password for invalid user test from 203.0.113.7 port 46687 ssh2
+Nov 19 14:27:55 server sshd[3325]: Failed password for invalid user support from 203.0.113.7 port 48741 ssh2
+Nov 19 14:29:02 server sshd[3326]: Failed password for invalid user guest from 203.0.113.7 port 45789 ssh2
+Nov 19 14:29:51 server sshd[1444]: Accepted password for backup from 192.168.1.40 port 55268 ssh2
+Nov 19 14:29:54 server sshd[1444]: pam_unix(sshd:session): session opened for user backup(uid=1003) by (uid=0)
+Nov 19 14:30:00 server sshd[2403]: Accepted publickey for deploy from 192.168.1.22 port 51003 ssh2: ED25519 SHA256:TRAININGKEY3
+Nov 19 14:30:02 server sshd[2403]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 14:30:09 server sshd[3327]: Failed password for invalid user oracle from 203.0.113.7 port 48967 ssh2
+Nov 19 14:31:16 server sshd[3328]: Failed password for invalid user oracle from 203.0.113.7 port 45432 ssh2
+Nov 19 14:32:23 server sshd[3329]: Failed password for invalid user support from 203.0.113.7 port 46159 ssh2
+Nov 19 14:33:30 server sshd[3330]: Failed password for invalid user test from 203.0.113.7 port 49753 ssh2
+Nov 19 14:34:37 server sshd[3331]: Failed password for invalid user test from 203.0.113.7 port 45599 ssh2
+Nov 19 14:42:00 server sshd[2403]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 14:53:42 server sshd[1281]: Accepted password for deploy from 192.168.1.22 port 56281 ssh2
+Nov 19 14:53:46 server sshd[1281]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 14:54:59 server sshd[1384]: Accepted password for analyst from 192.168.1.40 port 55062 ssh2
+Nov 19 14:55:00 server sshd[1384]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 15:00:00 server sshd[4100]: Failed password for admin from 198.51.100.23 port 51701 ssh2
+Nov 19 15:00:03 server sshd[1398]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 15:01:00 server sshd[4101]: Failed password for admin from 198.51.100.23 port 51826 ssh2
+Nov 19 15:02:00 server sshd[4102]: Failed password for admin from 198.51.100.23 port 51543 ssh2
+Nov 19 15:03:00 server sshd[4103]: Failed password for admin from 198.51.100.23 port 51873 ssh2
+Nov 19 15:04:00 server sshd[4104]: Failed password for admin from 198.51.100.23 port 51545 ssh2
+Nov 19 15:05:00 server sshd[4105]: Failed password for admin from 198.51.100.23 port 51183 ssh2
+Nov 19 15:05:06 server sshd[1278]: Accepted password for deploy from 10.0.0.5 port 50438 ssh2
+Nov 19 15:05:08 server sshd[1278]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 15:06:00 server sshd[4106]: Failed password for admin from 198.51.100.23 port 51414 ssh2
+Nov 19 15:07:00 server sshd[4107]: Failed password for admin from 198.51.100.23 port 51642 ssh2
+Nov 19 15:08:00 server sshd[4108]: Failed password for admin from 198.51.100.23 port 51822 ssh2
+Nov 19 15:10:03 server sshd[4201]: Accepted password for admin from 198.51.100.23 port 51505 ssh2
+Nov 19 15:10:05 server sshd[4201]: pam_unix(sshd:session): session opened for user admin(uid=1000) by (uid=0)
+Nov 19 15:14:51 server sshd[4201]: pam_unix(sshd:session): session closed for user admin
+Nov 19 15:22:19 server sshd[1321]: Accepted password for analyst from 10.0.0.5 port 58380 ssh2
+Nov 19 15:22:20 server sshd[1321]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 15:25:15 server sshd[1234]: Accepted password for deploy from 192.168.1.40 port 54978 ssh2
+Nov 19 15:25:16 server sshd[1234]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 15:34:06 server sshd[1278]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 15:43:17 server sshd[1397]: Accepted password for deploy from 192.168.1.15 port 53040 ssh2
+Nov 19 15:43:21 server sshd[1397]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 15:46:29 server sshd[1227]: Accepted password for deploy from 192.168.1.22 port 57042 ssh2
+Nov 19 15:46:30 server sshd[1227]: pam_unix(sshd:session): session opened for user deploy(uid=1001) by (uid=0)
+Nov 19 15:55:51 server sshd[1444]: pam_unix(sshd:session): session closed for user backup
+Nov 19 15:57:43 server sshd[1421]: Accepted password for analyst from 192.168.1.22 port 57348 ssh2
+Nov 19 15:57:45 server sshd[1421]: pam_unix(sshd:session): session opened for user analyst(uid=1002) by (uid=0)
+Nov 19 16:02:01 server sudo[5102]: admin : TTY=pts/1 ; PWD=/home/admin ; USER=root ; COMMAND=/usr/bin/systemctl status ssh
+Nov 19 16:08:33 server sudo[5117]: deploy : TTY=pts/2 ; PWD=/var/www ; USER=root ; COMMAND=/usr/bin/journalctl -u ssh
+Nov 19 16:19:59 server sshd[1384]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 16:21:19 server sshd[1321]: pam_unix(sshd:session): session closed for user analyst
+Nov 19 16:22:15 server sshd[1234]: pam_unix(sshd:session): session closed for user deploy
+Nov 19 16:30:43 server sshd[1421]: pam_unix(sshd:session): session closed for user analyst
