@@ -15,7 +15,48 @@ grep "Failed password" pro/pro10-final-case/ssh_auth_training.log \
 
 ### Был ли успешный вход с подозрительного адреса? Когда?
 
-Проверка через поиск событий по выбранному IP в выводе timeline.sh
+Проверка через поиск событий по IP `203.0.113.7` в выводе timeline.sh
+```
+pro/pro10-final-case/timeline.sh | grep '203.0.113.7'
+```
+
+Результат: множество неудачных попыток входа под разными учетками:
+```
+2026-11-19 14:00:00 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:01:07 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:02:14 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:03:21 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:04:28 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:05:35 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:06:42 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:07:49 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:08:56 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:10:03 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:11:10 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:12:17 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:13:24 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:14:31 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:15:38 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:16:45 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:17:52 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:18:59 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:20:06 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:21:13 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:22:20 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:23:27 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:24:34 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:25:41 [SSH] 203.0.113.7 Failed password for root
+2026-11-19 14:26:48 [SSH] 203.0.113.7 Failed password for invalid user test
+2026-11-19 14:27:55 [SSH] 203.0.113.7 Failed password for invalid user support
+2026-11-19 14:29:02 [SSH] 203.0.113.7 Failed password for invalid user guest
+2026-11-19 14:30:09 [SSH] 203.0.113.7 Failed password for invalid user oracle
+2026-11-19 14:31:16 [SSH] 203.0.113.7 Failed password for invalid user oracle
+2026-11-19 14:32:23 [SSH] 203.0.113.7 Failed password for invalid user support
+2026-11-19 14:33:30 [SSH] 203.0.113.7 Failed password for invalid user test
+2026-11-19 14:34:37 [SSH] 203.0.113.7 Failed password for invalid user test
+```
+
+Проверка через поиск событий по IP `198.51.100.23` в выводе timeline.sh
 ```
 pro/pro10-final-case/timeline.sh | grep '198.51.100.23'
 ```
@@ -114,7 +155,7 @@ pro/pro10-final-case/timeline.sh | grep ' 15:'
 
 ```
 
-### Проверка на обращения к несуществующим путям на веб-сервере
+### Проверка на обращения к чувствительным путям на веб-сервере
 
 Фильтрация полного таймлайна по ключу `404`
 ```
@@ -193,6 +234,7 @@ pro/pro10-final-case/timeline.sh | grep '203.0.113.99'
 Рекомендация (если данные адреса не подтвердятся как легитимный пентест): 
 
 1. Блокировка адресов фаерволом:
+- 203.0.113.7 (попытки входа под разными учетками)
 - 203.0.113.99 (обращения к чувствительным путям)
 - 203.0.113.45 (попытки подбора паролей к системным пользователям + сканирование)
 - 198.51.100.23 (успешная авторизация под admin после серии неудачных попыток)
