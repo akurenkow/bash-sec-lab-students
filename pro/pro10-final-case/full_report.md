@@ -96,11 +96,42 @@ cat pro/pro10-final-case/ssh_auth_training.log | grep '198.51.100.23' | grep 'Ac
 Nov 19 15:10:03 server sshd[4201]: Accepted password for admin from 198.51.100.23 port 51505 ssh2
 ```
 
-### Что происходило в это время на веб-сервере (access.log)?
+### Что происходило на сервере во время события компрометации (access.log)?
 
-Фильтрация в пределах часа по событиям с 15.00:
+Фильтрация логов веб-сервера в пределах часа по событиям с 15.00:
 ```
-pro/pro10-final-case/timeline.sh | grep ' 15:'
+pro/pro10-final-case/timeline.sh | grep 'WEB' | grep ' 15:'
+```
+
+Результат:
+```
+2026-11-19 15:05:24 [WEB] 10.0.0.18 POST /login 401
+2026-11-19 15:14:09 [WEB] 192.168.1.15 GET /static/style.css 200
+2026-11-19 15:15:00 [WEB] 10.0.0.18 GET /api/orders 500
+2026-11-19 15:18:02 [WEB] 192.168.1.15 GET /about 200
+2026-11-19 15:21:01 [WEB] 192.168.1.15 GET /api/products 200
+2026-11-19 15:21:42 [WEB] 192.168.1.22 GET /contact 200
+2026-11-19 15:23:52 [WEB] 10.0.0.18 POST /login 302
+2026-11-19 15:24:00 [WEB] 192.168.1.22 GET /api/products 503
+2026-11-19 15:29:42 [WEB] 192.168.1.22 GET /contact 200
+2026-11-19 15:30:20 [WEB] 192.168.1.15 GET /about 200
+2026-11-19 15:33:00 [WEB] 203.0.113.45 GET /search?q=test 429
+2026-11-19 15:40:27 [WEB] 192.168.1.40 GET /index.html 200
+2026-11-19 15:42:00 [WEB] 10.0.0.5 GET /checkout 500
+2026-11-19 15:42:10 [WEB] 192.168.1.22 GET /robots.txt 200
+2026-11-19 15:46:06 [WEB] 10.0.0.18 GET /favicon.ico 304
+2026-11-19 15:47:08 [WEB] 10.0.0.18 GET / 200
+2026-11-19 15:47:54 [WEB] 192.168.1.40 GET /index.html 200
+2026-11-19 15:56:17 [WEB] 192.168.1.15 GET /robots.txt 200
+2026-11-19 15:58:36 [WEB] 10.0.0.18 POST /login 302
+2026-11-19 15:59:40 [WEB] 192.168.1.15 GET /favicon.ico 304
+```
+
+### Что происходило на сервере во время события компрометации (auth.log)?
+
+Фильтрация логов ssh в пределах часа по событиям с 15.00:
+```
+pro/pro10-final-case/timeline.sh | grep 'SSH' | grep ' 15:'
 ```
 
 Результат:
@@ -114,45 +145,24 @@ pro/pro10-final-case/timeline.sh | grep ' 15:'
 2026-11-19 15:05:00 [SSH] 198.51.100.23 Failed password for admin
 2026-11-19 15:05:06 [SSH] 10.0.0.5 Accepted password for deploy
 2026-11-19 15:05:08 [SSH]  session): session opened for user deploy(uid=1001) by (uid=0)
-2026-11-19 15:05:24 [WEB] 10.0.0.18 POST /login 401
 2026-11-19 15:06:00 [SSH] 198.51.100.23 Failed password for admin
 2026-11-19 15:07:00 [SSH] 198.51.100.23 Failed password for admin
 2026-11-19 15:08:00 [SSH] 198.51.100.23 Failed password for admin
 2026-11-19 15:10:03 [SSH] 198.51.100.23 Accepted password for admin
 2026-11-19 15:10:05 [SSH]  session): session opened for user admin(uid=1000) by (uid=0)
-2026-11-19 15:14:09 [WEB] 192.168.1.15 GET /static/style.css 200
 2026-11-19 15:14:51 [SSH]  session): session closed for user admin
-2026-11-19 15:15:00 [WEB] 10.0.0.18 GET /api/orders 500
-2026-11-19 15:18:02 [WEB] 192.168.1.15 GET /about 200
-2026-11-19 15:21:01 [WEB] 192.168.1.15 GET /api/products 200
-2026-11-19 15:21:42 [WEB] 192.168.1.22 GET /contact 200
 2026-11-19 15:22:19 [SSH] 10.0.0.5 Accepted password for analyst
 2026-11-19 15:22:20 [SSH]  session): session opened for user analyst(uid=1002) by (uid=0)
-2026-11-19 15:23:52 [WEB] 10.0.0.18 POST /login 302
-2026-11-19 15:24:00 [WEB] 192.168.1.22 GET /api/products 503
 2026-11-19 15:25:15 [SSH] 192.168.1.40 Accepted password for deploy
 2026-11-19 15:25:16 [SSH]  session): session opened for user deploy(uid=1001) by (uid=0)
-2026-11-19 15:29:42 [WEB] 192.168.1.22 GET /contact 200
-2026-11-19 15:30:20 [WEB] 192.168.1.15 GET /about 200
-2026-11-19 15:33:00 [WEB] 203.0.113.45 GET /search?q=test 429
 2026-11-19 15:34:06 [SSH]  session): session closed for user deploy
-2026-11-19 15:40:27 [WEB] 192.168.1.40 GET /index.html 200
-2026-11-19 15:42:00 [WEB] 10.0.0.5 GET /checkout 500
-2026-11-19 15:42:10 [WEB] 192.168.1.22 GET /robots.txt 200
 2026-11-19 15:43:17 [SSH] 192.168.1.15 Accepted password for deploy
 2026-11-19 15:43:21 [SSH]  session): session opened for user deploy(uid=1001) by (uid=0)
-2026-11-19 15:46:06 [WEB] 10.0.0.18 GET /favicon.ico 304
 2026-11-19 15:46:29 [SSH] 192.168.1.22 Accepted password for deploy
 2026-11-19 15:46:30 [SSH]  session): session opened for user deploy(uid=1001) by (uid=0)
-2026-11-19 15:47:08 [WEB] 10.0.0.18 GET / 200
-2026-11-19 15:47:54 [WEB] 192.168.1.40 GET /index.html 200
 2026-11-19 15:55:51 [SSH]  session): session closed for user backup
-2026-11-19 15:56:17 [WEB] 192.168.1.15 GET /robots.txt 200
 2026-11-19 15:57:43 [SSH] 192.168.1.22 Accepted password for analyst
 2026-11-19 15:57:45 [SSH]  session): session opened for user analyst(uid=1002) by (uid=0)
-2026-11-19 15:58:36 [WEB] 10.0.0.18 POST /login 302
-2026-11-19 15:59:40 [WEB] 192.168.1.15 GET /favicon.ico 304
-
 ```
 
 ### Проверка на обращения к чувствительным путям на веб-сервере
