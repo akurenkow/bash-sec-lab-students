@@ -30,7 +30,7 @@ UID1000_USERS="$(awk -F: '$3 >= 1000 {print $1}' /etc/passwd)"
 put_to_report "$UID1000_USERS" 'UID 1000 users'
 
 # сохранить root-процессы не из системных путей в файл отчета
-ROOT_PROCS="$(ps -u root -o pid,user,comm,args | awk 'NR>1 && $4 !~ /^\[.*\]$/ && $4 !~ /^\/(usr\/)?(local\/)?s?bin\// {print}')"
+ROOT_PROCS="$(ps -u root -o pid,user,comm,args | awk 'NR>1 && $4 ~ /^\// && $4 !~ /^\/(usr\/)?(local\/)?(s?bin|lib|libexec)\// {print}')"
 put_to_report "$ROOT_PROCS" 'root processes'
 
 # сохранить открытые порты в файл отчета
